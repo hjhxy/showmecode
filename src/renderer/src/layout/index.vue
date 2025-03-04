@@ -20,10 +20,15 @@ import Sidebar from './sidebar/index.vue'
   width: 100vw;
   height: 100vh;
 
+  .sidebar, .main {
+    background-color: rgb(32, 32, 32);
+    color: white;
+  }
+
   .sidebar {
     width: 80px;
     height: 100vh;
-    background-color: gray;
+    box-shadow: ;
   }
 
   .main {
