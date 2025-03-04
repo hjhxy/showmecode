@@ -4,10 +4,16 @@ import { ref, watch } from 'vue'
 
 const useRouteModule = () => {
   const chooseRoute = ref('/')
-  watch(router.currentRoute, (newval, oldval) => {
-    console.log(newval, oldval)
-    chooseRoute.value = newval.path
-  })
+  watch(
+    router.currentRoute,
+    (newval) => {
+      chooseRoute.value = newval.path
+    },
+    {
+      immediate: true,
+      deep: true
+    }
+  )
   const routeItems = [
     {
       path: '/',
@@ -24,7 +30,8 @@ const useRouteModule = () => {
   ]
 
   return {
-    routeItems
+    routeItems,
+    chooseRoute
   }
 }
 const useUtlsModule = () => {
@@ -39,31 +46,53 @@ const useUtlsModule = () => {
       name: '反馈'
     }
   ]
+  const chooseUtil = ref('')
+
+  const changeUtil = (name: string) => {
+    chooseUtil.value = name
+  }
 
   return {
-    utilItems
+    utilItems,
+    chooseUtil,
+    changeUtil
   }
 }
 
-const { routeItems } = useRouteModule()
-const { utilItems } = useUtlsModule()
+const { routeItems, chooseRoute } = useRouteModule()
+const { utilItems, chooseUtil, changeUtil } = useUtlsModule()
 </script>
 
 <template>
   <div class="sidebar-container">
     <div class="routes">
-      <router-link v-for="item in routeItems" :key="item.path" class="items" :to="item.path">{{
-        item.name
-      }}</router-link>
+      <router-link
+        v-for="item in routeItems"
+        :key="item.path"
+        :class="['items', item.path == chooseRoute ? 'chooseItem' : '']"
+        :to="item.path"
+        >{{ item.name }}</router-link
+      >
     </div>
 
     <div class="utils">
-      <div v-for="item in utilItems" :key="item.name" class="items chat">{{ item.name }}</div>
+      <div
+        v-for="item in utilItems"
+        :key="item.name"
+        :class="['items', item.name == chooseUtil ? 'chooseItem' : '']"
+        @click="changeUtil(item.name)"
+      >
+        {{ item.name }}
+      </div>
     </div>
   </div>
 </template>
 
 <style lang="less" scoped>
+.chooseItem {
+  background-color: red;
+}
+
 .sidebar-container {
   display: flex;
   flex-direction: column;
@@ -90,6 +119,7 @@ const { utilItems } = useUtlsModule()
       text-align: center;
       transition: all 0.2s;
       border-radius: 5px;
+      font-size: 13px;
 
       &:hover {
         cursor: pointer;
