@@ -20,7 +20,8 @@ import Sidebar from './sidebar/index.vue'
   width: 100vw;
   height: 100vh;
 
-  .sidebar, .main {
+  .sidebar,
+  .main {
     background-color: rgb(32, 32, 32);
     color: white;
   }
@@ -28,7 +29,7 @@ import Sidebar from './sidebar/index.vue'
   .sidebar {
     width: 80px;
     height: 100vh;
-    box-shadow: ;
+    box-shadow:;
   }
 
   .main {

@@ -21,11 +21,15 @@ const useRouteModule = () => {
     },
     {
       path: '/questions',
-      name: '答题区'
+      name: '题目'
     },
     {
       path: '/file',
       name: '文件'
+    },
+    {
+      path: '/answer',
+      name: '答题区'
     }
   ]
 
@@ -49,6 +53,9 @@ const useUtlsModule = () => {
   const chooseUtil = ref('')
 
   const changeUtil = (name: string) => {
+    if (chooseUtil.value == name) {
+      return (chooseUtil.value = '')
+    }
     chooseUtil.value = name
   }
 
@@ -64,7 +71,7 @@ const { utilItems, chooseUtil, changeUtil } = useUtlsModule()
 </script>
 
 <template>
-  <div class="sidebar-container">
+  <div class="sidebar-container no-select">
     <div class="routes">
       <router-link
         v-for="item in routeItems"
