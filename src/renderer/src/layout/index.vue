@@ -1,6 +1,7 @@
 <script setup lang="ts">
-import Main from './main/index.vue'
-import Sidebar from './sidebar/index.vue'
+import Main from './Main/index.vue'
+import Sidebar from './SideBar/index.vue'
+import HeaderBar from './Headerbar/index.vue'
 </script>
 
 <template>
@@ -8,33 +9,59 @@ import Sidebar from './sidebar/index.vue'
     <div class="sidebar">
       <Sidebar />
     </div>
-    <div class="main">
-      <Main />
+    <div class="container">
+      <div class="headerbar">
+        <HeaderBar />
+      </div>
+      <div class="main">
+        <Main />
+      </div>
     </div>
   </div>
 </template>
 
 <style lang="less" scoped>
+@media (max-width: 710px) {
+  .sidebar {
+    display: none;
+  }
+}
+
 .layout-container {
   display: flex;
   width: 100vw;
   height: 100vh;
 
   .sidebar,
-  .main {
-    background-color: rgb(32, 32, 32);
+  .container {
+    background-color: #1a1a1a;
     color: white;
+    min-height: 600px;
   }
 
   .sidebar {
-    width: 80px;
+    width: 60px;
+    min-width: 60px;
     height: 100vh;
-    box-shadow:;
+    box-shadow: 3px 0px 2px rgba(0, 0, 0, 0.5);
+    z-index: 1;
   }
 
-  .main {
-    height: 100vh;
+  .container {
     flex: 1;
+    min-width: 650px;
+    display: flex;
+    flex-direction: column;
+
+    .headerbar {
+      box-shadow: 0px 3px 2px rgba(0, 0, 0, 0.5);
+      height: 60px;
+    }
+
+    .main {
+      height: 100vh;
+      flex: 1;
+    }
   }
 }
 </style>

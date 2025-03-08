@@ -37,6 +37,11 @@
   box-sizing: border-box;
   margin: 0;
   font-weight: normal;
+  &::-webkit-scrollbar {
+    display: none;
+  }
+  scrollbar-width: none;
+  -ms-overflow-style: none;
 }
 
 ul {

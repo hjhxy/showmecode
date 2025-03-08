@@ -2,10 +2,12 @@
 
 <template>
   <div class="main-container">
-    111
     <RouterView />
-    222
   </div>
 </template>
 
-<style lang="less" scoped></style>
+<style lang="less" scoped>
+.main-container {
+  height: 100%;
+}
+</style>

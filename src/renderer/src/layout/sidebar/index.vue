@@ -1,6 +1,23 @@
 <script setup lang="ts">
 import router from '@renderer/routes'
 import { ref, watch } from 'vue'
+// import { getFilePath } from '@renderer/utils/filepath'
+import shouyeImg from '@resources/icons/sidebar/jia.png'
+import shouyeActiveImg from '@resources/icons/sidebar/jia-active.png'
+import timuImg from '@resources/icons/sidebar/timu.png'
+import timuActiveImg from '@resources/icons/sidebar/timu-active.png'
+import wenjianImg from '@resources/icons/sidebar/wenjian.png'
+import wenjianActiveImg from '@resources/icons/sidebar/wenjian-active.png'
+import datiImg from '@resources/icons/sidebar/dati.png'
+import datiActiveImg from '@resources/icons/sidebar/dati-active.png'
+import liaotianImg from '@resources/icons/sidebar/liaotian.png'
+import liaotianActiveImg from '@resources/icons/sidebar/liaotian-active.png'
+import shezhiImg from '@resources/icons/sidebar/shezhi.png'
+import shezhiActiveImg from '@resources/icons/sidebar/shezhi-active.png'
+import fankuiImg from '@resources/icons/sidebar/fankui.png'
+import fankuiActiveImg from '@resources/icons/sidebar/fankui-active.png'
+
+// const filepath = getFilePath()
 
 const useRouteModule = () => {
   const chooseRoute = ref('/')
@@ -17,19 +34,27 @@ const useRouteModule = () => {
   const routeItems = [
     {
       path: '/',
-      name: '首页'
+      name: '', //首页
+      imgpath: shouyeImg,
+      imgpathActive: shouyeActiveImg
     },
     {
       path: '/questions',
-      name: '题目'
+      name: '题目',
+      imgpath: timuImg,
+      imgpathActive: timuActiveImg
     },
     {
       path: '/file',
-      name: '文件'
+      name: '文件',
+      imgpath: wenjianImg,
+      imgpathActive: wenjianActiveImg
     },
     {
       path: '/answer',
-      name: '答题区'
+      name: '答题区',
+      imgpath: datiImg,
+      imgpathActive: datiActiveImg
     }
   ]
 
@@ -41,13 +66,19 @@ const useRouteModule = () => {
 const useUtlsModule = () => {
   const utilItems = [
     {
-      name: '聊天'
+      name: '聊天',
+      imgpath: liaotianImg,
+      imgpathActive: liaotianActiveImg
     },
     {
-      name: '设置'
+      name: '设置',
+      imgpath: shezhiImg,
+      imgpathActive: shezhiActiveImg
     },
     {
-      name: '反馈'
+      name: '反馈',
+      imgpath: fankuiImg,
+      imgpathActive: fankuiActiveImg
     }
   ]
   const chooseUtil = ref('')
@@ -78,8 +109,16 @@ const { utilItems, chooseUtil, changeUtil } = useUtlsModule()
         :key="item.path"
         :class="['items', item.path == chooseRoute ? 'chooseItem' : '']"
         :to="item.path"
-        >{{ item.name }}</router-link
       >
+        <img
+          class="icon"
+          :src="item.path == chooseRoute ? item.imgpathActive : item.imgpath"
+          alt="icons"
+        />
+        <div v-if="item.name" class="name">
+          {{ item.name }}
+        </div>
+      </router-link>
     </div>
 
     <div class="utils">
@@ -89,7 +128,14 @@ const { utilItems, chooseUtil, changeUtil } = useUtlsModule()
         :class="['items', item.name == chooseUtil ? 'chooseItem' : '']"
         @click="changeUtil(item.name)"
       >
-        {{ item.name }}
+        <img
+          class="icon"
+          :src="item.name == chooseUtil ? item.imgpathActive : item.imgpath"
+          alt="icons"
+        />
+        <div class="name">
+          {{ item.name }}
+        </div>
       </div>
     </div>
   </div>
@@ -97,7 +143,7 @@ const { utilItems, chooseUtil, changeUtil } = useUtlsModule()
 
 <style lang="less" scoped>
 .chooseItem {
-  background-color: red;
+  background-color: #090b0d;
 }
 
 .sidebar-container {
@@ -107,7 +153,7 @@ const { utilItems, chooseUtil, changeUtil } = useUtlsModule()
   justify-content: space-between;
   width: 100%;
   height: 100%;
-  padding: 10px;
+  padding: 10px 5px;
 
   .routes,
   .utils {
@@ -118,11 +164,12 @@ const { utilItems, chooseUtil, changeUtil } = useUtlsModule()
 
     .items {
       width: 100%;
-      padding: 10px 0px;
+      // padding: 10px 0px;
+      height: 55px;
       display: flex;
       flex-direction: column;
-      align-self: center;
-      justify-content: center;
+      align-items: center;
+      justify-content: space-evenly;
       text-align: center;
       transition: all 0.2s;
       border-radius: 5px;
@@ -130,7 +177,16 @@ const { utilItems, chooseUtil, changeUtil } = useUtlsModule()
 
       &:hover {
         cursor: pointer;
-        background-color: red;
+        background-color: #090b0d;
+      }
+
+      .icon {
+        width: 22px;
+        height: 22px;
+      }
+
+      .name {
+        font-size: 11px;
       }
     }
   }
