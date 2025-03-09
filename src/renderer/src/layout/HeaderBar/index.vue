@@ -67,7 +67,7 @@ const { peopleList } = usePeopleList()
     </div>
     <div class="right">
       <div class="clock">
-        <el-button color="#3b3b3b">
+        <el-button color="#3b3b3b" circle>
           <el-icon><AlarmClock /></el-icon>
         </el-button>
       </div>
