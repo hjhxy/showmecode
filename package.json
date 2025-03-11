@@ -23,11 +23,11 @@
   "dependencies": {
     "@electron-toolkit/preload": "^3.0.1",
     "@electron-toolkit/utils": "^4.0.0",
-    "@rollup/rollup-win32-x64-msvc": "^4.34.9",
     "electron-devtools-installer": "^4.0.0",
     "electron-updater": "^6.3.9",
     "element-plus": "^2.9.6",
     "pinia": "^3.0.1",
+    "rollup": "^4.35.0",
     "vue-router": "^4.5.0"
   },
   "devDependencies": {

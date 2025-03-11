@@ -10,7 +10,8 @@ const props = defineProps<{
 const { leftDom, rightDom } = props
 const width = ref(props.width || 8)
 const startx = ref(0)
-const startwidth = ref(0)
+const left_startwidth = ref(0)
+const right_startwidth = ref(0)
 const isDragging = ref(false) // 防止多次注册事件
 
 onMounted(() => {
@@ -22,11 +23,12 @@ const onMouseDown = (e: MouseEvent) => {
   isDragging.value = true
 
   startx.value = e.clientX
-  startwidth.value = leftDom?.offsetWidth || 0
+  left_startwidth.value = leftDom?.offsetWidth || 0
+  right_startwidth.value = rightDom.offsetWidth || 0
 
   window.addEventListener('mousemove', onMouseMove)
   window.addEventListener('mouseup', onMouseUp)
-  //   console.log('onMouseDown')
+  console.log('onMouseDown')
 }
 
 const onMouseMove = (e: MouseEvent) => {
@@ -34,19 +36,22 @@ const onMouseMove = (e: MouseEvent) => {
 
   const deltaX = e.clientX - startx.value // 鼠标移动的距离
 
-  let newLeftWidth = startwidth.value + deltaX
+  let newLeftWidth = left_startwidth.value + deltaX
   let newRightWidth = rightDom.offsetWidth - deltaX // 右侧宽度相应减少
 
-  // 限制左侧最小宽度
-  newLeftWidth = Math.max(200, newLeftWidth)
-
-  // 限制右侧最大宽度
-  newRightWidth = Math.min(800, newRightWidth)
-
-  // 更新宽度
-  leftDom.style.width = `${newLeftWidth}px`
-  rightDom.style.width = `${newRightWidth}px`
-  console.log(1)
+  console.log('move', newLeftWidth, newRightWidth)
+  // 限制左侧最小宽度与右侧最大宽度
+  if (
+    newLeftWidth >= 100 &&
+    newLeftWidth <= left_startwidth.value + 200 &&
+    newRightWidth >= 100 &&
+    newRightWidth <= right_startwidth.value + 200
+  ) {
+    // 更新宽度
+    leftDom.style.width = `${newLeftWidth}px`
+    rightDom.style.width = `${newRightWidth}px`
+    console.log(newLeftWidth, newRightWidth)
+  }
 }
 
 const onMouseUp = () => {
