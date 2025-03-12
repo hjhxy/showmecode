@@ -1,7 +1,8 @@
 <script setup lang="ts">
 import { onMounted, onUnmounted, ref } from 'vue'
 import { Operation } from '@element-plus/icons-vue'
-const $drag1 = ref<HTMLElement | null>(null)
+import { watch } from 'fs'
+const $drag = ref<HTMLElement | null>(null)
 const props = defineProps<{
   leftDom: HTMLElement | null
   rightDom: HTMLElement | null
@@ -15,7 +16,16 @@ const right_startwidth = ref(0)
 const isDragging = ref(false) // 防止多次注册事件
 
 onMounted(() => {
-  $drag1.value?.addEventListener('mousedown', onMouseDown)
+  watch(
+    () => {
+      return [props.leftDom, props.rightDom]
+    },
+    () => {}
+  )
+  setTimeout(() => {
+    console.log(leftDom)
+  }, 1000)
+  $drag.value?.addEventListener('mousedown', onMouseDown)
 })
 
 const onMouseDown = (e: MouseEvent) => {
@@ -24,34 +34,27 @@ const onMouseDown = (e: MouseEvent) => {
 
   startx.value = e.clientX
   left_startwidth.value = leftDom?.offsetWidth || 0
-  right_startwidth.value = rightDom.offsetWidth || 0
+  right_startwidth.value = rightDom?.offsetWidth || 0
 
   window.addEventListener('mousemove', onMouseMove)
   window.addEventListener('mouseup', onMouseUp)
-  console.log('onMouseDown')
+  console.log('onMouseDown', leftDom?.offsetWidth, rightDom?.offsetWidth)
 }
 
 const onMouseMove = (e: MouseEvent) => {
   if (!leftDom || !rightDom) return
+  console.log('onMouseMove')
 
   const deltaX = e.clientX - startx.value // 鼠标移动的距离
 
   let newLeftWidth = left_startwidth.value + deltaX
   let newRightWidth = rightDom.offsetWidth - deltaX // 右侧宽度相应减少
 
-  console.log('move', newLeftWidth, newRightWidth)
+  console.log('move', newLeftWidth, newRightWidth, newLeftWidth + newRightWidth)
   // 限制左侧最小宽度与右侧最大宽度
-  if (
-    newLeftWidth >= 100 &&
-    newLeftWidth <= left_startwidth.value + 200 &&
-    newRightWidth >= 100 &&
-    newRightWidth <= right_startwidth.value + 200
-  ) {
-    // 更新宽度
-    leftDom.style.width = `${newLeftWidth}px`
-    rightDom.style.width = `${newRightWidth}px`
-    console.log(newLeftWidth, newRightWidth)
-  }
+  if (newLeftWidth <= 100 || newRightWidth <= 100) return
+  leftDom.style.width = `${newLeftWidth}px`
+  rightDom.style.width = `${newRightWidth}px`
 }
 
 const onMouseUp = () => {
@@ -61,14 +64,14 @@ const onMouseUp = () => {
 }
 
 onUnmounted(() => {
-  $drag1.value?.removeEventListener('mousedown', onMouseDown)
+  $drag.value?.removeEventListener('mousedown', onMouseDown)
   window.removeEventListener('mousemove', onMouseMove)
   window.removeEventListener('mouseup', onMouseUp)
 })
 </script>
 
 <template>
-  <div ref="$drag1" class="drag" :style="{ width: width + 'px' }">
+  <div ref="$drag" class="drag" :style="{ width: width + 'px' }">
     <el-icon class="icon" color="#3f3f40"><Operation /></el-icon>
   </div>
 </template>
