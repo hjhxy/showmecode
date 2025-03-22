@@ -35,7 +35,6 @@ const { $filetree, $codeedit, $terminal, $filecontainer, $leftcontainer } = useD
 
 <style lang="less" scoped>
 .file-container {
-  border: 1px solid green;
   display: flex;
   flex-direction: row;
   height: 100%;
@@ -51,14 +50,12 @@ const { $filetree, $codeedit, $terminal, $filecontainer, $leftcontainer } = useD
       padding: 8px;
       width: 150px;
       min-width: 100px;
-      border: 1px solid red;
     }
 
     .code-edit {
       padding: 8px;
       flex: 1;
       min-width: 100px;
-      border: 1px solid red;
     }
   }
 
@@ -66,7 +63,6 @@ const { $filetree, $codeedit, $terminal, $filecontainer, $leftcontainer } = useD
     padding: 8px;
     width: 200px;
     min-width: 100px;
-    border: 1px solid red;
   }
 }
 </style>
