@@ -4,7 +4,8 @@ import Drag from '@renderer/components/Drag.vue'
 import FileTree from './components/FileTree.vue'
 import CodeEdit from './components/CodeEdit.vue'
 import Terminal from './components/Terminal.vue'
-import { IFile } from '@renderer/types/filetree'
+import { useFileStore } from '@renderer/store/file'
+import type { IFileTree } from '@renderer/types/filetree'
 
 const useDrag = () => {
   const $filetree = ref<HTMLElement | null>(null)
@@ -23,40 +24,11 @@ const useDrag = () => {
 }
 
 const useFileTree = () => {
-  const filetreeData: IFile[] = [
-    {
-      id: '1',
-      name: '文件夹1',
-      type: 'file',
-      children: [
-        {
-          id: '1-1',
-          name: '文件夹1-1',
-          children: [],
-          type: 'file'
-        }
-      ]
-    },
-    {
-      id: '2',
-      name: '文件夹2',
-      type: 'filelist',
-      children: [
-        {
-          id: '2-1',
-          name: '文件夹2-1',
-          type: 'file',
-          children: null
-        },
-        {
-          id: '2-2',
-          name: '文件夹2-1',
-          type: 'file',
-          children: null
-        }
-      ]
-    }
-  ]
+  const fileStore = useFileStore()
+  const filetreeData = ref<IFileTree[]>([])
+  fileStore.getFileData().then(() => {
+    filetreeData.value = fileStore.filetreeData
+  })
 
   return {
     filetreeData
@@ -71,7 +43,7 @@ const { filetreeData } = useFileTree()
   <div ref="$filecontainer" class="file-container">
     <div ref="$leftcontainer" class="left-container">
       <div ref="$filetree" class="file-tree">
-        <FileTree :filetree-data="filetreeData" />
+        <FileTree :filetree-data="filetreeData" :padding-left="0" :padding-step="8" />
       </div>
       <Drag :left-dom="$filetree" :right-dom="$codeedit" :container="$leftcontainer" />
       <div ref="$codeedit" class="code-edit">

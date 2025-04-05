@@ -1,8 +1,17 @@
-interface IFile {
-  id: number | string
+interface IFileArray {
+  id: string
   name: string
-  type: 'file' | 'filelist'
-  children: IFile[] | null
+  type: 'file' | 'folder'
+  content: string | null
+  parentId: string | null
 }
 
-export type { IFile }
+interface IFileTree {
+  id: string
+  name: string
+  type: 'file' | 'folder'
+  children: IFileTree[] | null
+  content: string | null
+}
+
+export type { IFileArray, IFileTree }

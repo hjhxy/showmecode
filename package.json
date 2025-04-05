@@ -26,6 +26,7 @@
     "electron-devtools-installer": "^4.0.0",
     "electron-updater": "^6.3.9",
     "element-plus": "^2.9.6",
+    "monaco-editor": "^0.52.2",
     "pinia": "^3.0.1",
     "rollup": "^4.35.0",
     "vue-router": "^4.5.0"
