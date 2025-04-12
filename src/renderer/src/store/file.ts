@@ -6,7 +6,8 @@ export const useFileStore = defineStore('file', {
   state: () => ({
     fileData: [] as IFileArray[],
     filetreeData: [] as IFileTree[],
-    currentEditFile: null as IFileArray | null
+    currentEditFile: null as IFileArray | null,
+    currentClickFile: null as IFileArray | null
   }),
   actions: {
     async getFileData() {
@@ -23,6 +24,9 @@ export const useFileStore = defineStore('file', {
     },
     setCurrentEditFile(id: string) {
       this.currentEditFile = this.fileData.find((item) => item.id === id) || null
+    },
+    setCurrentClickFile(id: string) {
+      this.currentClickFile = this.fileData.find((item) => item.id === id) || null
     }
   },
   getters: {}

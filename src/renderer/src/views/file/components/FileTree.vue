@@ -13,12 +13,21 @@ const props = defineProps<{
 const isOpen = ref<Record<string | number, boolean>>({})
 const fileStore = useFileStore()
 
-const handleOpen = (item: IFileTree) => {
+const handleEdit = (item: IFileTree) => {
   if (item.type === 'folder') {
     isOpen.value[item.id] = !isOpen.value[item.id]
   } else {
     fileStore.setCurrentEditFile(item.id)
   }
+}
+
+const handleChoose = (item: IFileTree) => {
+  console.log(item)
+}
+
+const handleClick = (item: IFileTree) => {
+  handleChoose(item)
+  handleEdit(item)
 }
 </script>
 
@@ -28,7 +37,7 @@ const handleOpen = (item: IFileTree) => {
       <div
         class="file-item-name"
         :style="{ paddingLeft: `${props.paddingLeft}px` }"
-        @click="handleOpen(item)"
+        @click="handleClick(item)"
       >
         <el-icon v-if="item.type === 'folder'" :style="{ color: '#c2c2c2' }">
           <ArrowDownBold v-if="isOpen[item.id]" />
