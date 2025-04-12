@@ -43,7 +43,7 @@ const { filetreeData } = useFileTree()
   <div ref="$filecontainer" class="file-container">
     <div ref="$leftcontainer" class="left-container">
       <div ref="$filetree" class="file-tree">
-        <FileTree :filetree-data="filetreeData" :padding-left="0" :padding-step="8" />
+        <FileTree :filetree-data="filetreeData" :padding-left="5" :padding-step="8" />
       </div>
       <Drag :left-dom="$filetree" :right-dom="$codeedit" :container="$leftcontainer" />
       <div ref="$codeedit" class="code-edit">

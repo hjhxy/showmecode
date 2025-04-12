@@ -6,7 +6,8 @@ export const useFileStore = defineStore('file', {
   state: () => ({
     fileData: [] as IFileArray[],
     filetreeData: [] as IFileTree[],
-    currentEditFile: null as IFileArray | null
+    currentEditFile: null as IFileArray | null,
+    currentClickFile: null as IFileArray | null
   }),
   actions: {
     async getFileData() {
@@ -23,6 +24,9 @@ export const useFileStore = defineStore('file', {
     },
     setCurrentEditFile(id: string) {
       this.currentEditFile = this.fileData.find((item) => item.id === id) || null
+    },
+    setCurrentClickFile(id: string) {
+      this.currentClickFile = this.fileData.find((item) => item.id === id) || null
     }
   },
   getters: {}
@@ -45,7 +49,7 @@ const filedata: IFileArray[] = [
   },
   {
     id: '3',
-    name: '文件3',
+    name: '文件3.ts',
     type: 'file',
     content: 'console.log("Hello, World!");\nconsole.log("Hello, showmebug!");\n',
     parentId: null
@@ -59,59 +63,9 @@ const filedata: IFileArray[] = [
   },
   {
     id: '5',
-    name: '文件5',
+    name: '文件5我是文件夹55555',
     type: 'file',
     content: 'console.log("Hello, World!");',
     parentId: '4'
   }
 ]
-
-/*
-[
-  {
-    id: '1',
-    name: '文件夹1',
-    type: 'folder',
-    children: [
-      {
-        id: '1-1',
-        name: '文件夹1-1',
-        type: 'folder',
-        children: null,
-        content: null
-      }
-    ],
-    content: null
-  },
-  {
-    id: '2',
-    name: '文件夹2',
-    type: 'folder',
-    children: [
-      {
-        id: '2-1',
-        name: '文件夹2-1',
-        type: 'folder',
-        children: [
-          {
-            id: '2-2-1',
-            name: '文件2-2-1',
-            type: 'file',
-            children: null,
-            content: 'console.log("Hello, World!");'
-          }
-        ],
-        content: null
-      },
-      {
-        id: '2-2',
-        name: '文件2-2',
-        type: 'file',
-        children: null,
-        content: 'console.log("Hello, World!");\nconsole.log("Hello, showmebug!");'
-      }
-    ],
-    content: null
-  }
-]
-*/

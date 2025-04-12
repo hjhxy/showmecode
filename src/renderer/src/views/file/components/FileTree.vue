@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref } from 'vue'
+import { computed, ref } from 'vue'
 import { IFileTree } from '@renderer/types/filetree'
 import { ArrowRightBold, ArrowDownBold } from '@element-plus/icons-vue'
 import { useFileStore } from '@renderer/store/file'
@@ -13,12 +13,20 @@ const props = defineProps<{
 const isOpen = ref<Record<string | number, boolean>>({})
 const fileStore = useFileStore()
 
-const handleOpen = (item: IFileTree) => {
+const currentEditFile = computed(() => {
+  return fileStore.currentEditFile
+})
+
+const handleEdit = (item: IFileTree) => {
   if (item.type === 'folder') {
     isOpen.value[item.id] = !isOpen.value[item.id]
   } else {
     fileStore.setCurrentEditFile(item.id)
   }
+}
+
+const handleClick = (item: IFileTree) => {
+  handleEdit(item)
 }
 </script>
 
@@ -26,9 +34,9 @@ const handleOpen = (item: IFileTree) => {
   <div class="container">
     <div v-for="item in props.filetreeData" :key="item.id" class="file-item">
       <div
-        class="file-item-name"
+        :class="['file-item-name', currentEditFile?.id === item.id ? 'editStyle' : 'none']"
         :style="{ paddingLeft: `${props.paddingLeft}px` }"
-        @click="handleOpen(item)"
+        @click="handleClick(item)"
       >
         <el-icon v-if="item.type === 'folder'" :style="{ color: '#c2c2c2' }">
           <ArrowDownBold v-if="isOpen[item.id]" />
@@ -38,7 +46,7 @@ const handleOpen = (item: IFileTree) => {
       </div>
       <div v-if="item.children" class="file-item-child">
         <FileTree
-          v-show="isOpen[item.id]"
+          v-if="isOpen[item.id]"
           :filetree-data="item.children"
           :padding-left="props.paddingLeft + props.paddingStep"
           :padding-step="props.paddingStep"
@@ -83,8 +91,13 @@ const handleOpen = (item: IFileTree) => {
 
       &:hover {
         color: white;
-        background-color: #626262;
+        background-color: rgba(124, 124, 124, 0.4);
       }
+    }
+
+    .editStyle {
+      color: white;
+      background-color: #757575 !important;
     }
 
     .file-item-child {
