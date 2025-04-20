@@ -11,7 +11,7 @@ import tsWorker from 'monaco-editor/esm/vs/language/typescript/ts.worker?worker'
 const fileStore = useFileStore()
 const currentEditFile = computed(() => fileStore.currentEditFile)
 let editor: monaco.editor.IStandaloneCodeEditor | null = null
-
+// todo: 编辑文件如何暂存并执行。
 window.MonacoEnvironment = {
   getWorker(workerId, label) {
     if (label === 'json') {
